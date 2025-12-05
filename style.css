@@ -1,0 +1,353 @@
+/* --- 1. Variables & Reset --- */
+:root {
+  --bg-color: #0a0a0a;
+  --card-bg: rgba(30, 30, 30, 0.6);
+  --text-main: #ffffff;
+  --text-muted: #b3b3b3;
+  --primary: #8e2de2;
+  --secondary: #4a00e0;
+  --accent: #ff007f;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* --- 2. Typography --- */
+h1, h2 {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.gradient-text {
+  background: linear-gradient(to right, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 3.5rem; /* Slightly smaller to fit logo */
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  margin-top: 15px;
+}
+
+/* --- 3. Header & Logo --- */
+header {
+  min-height: 100vh; /* changed to min-height for mobile safety */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
+  position: relative;
+  padding: 40px 20px;
+}
+
+/* NEW LOGO STYLING */
+.logo-container {
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 2;
+}
+
+.profile-logo {
+  width: 150px;
+  height: 150px;
+  object-fit: cover; /* Ensures image fills the square without stretching */
+  border-radius: 25px; /* Rounded Square */
+  border: 4px solid var(--accent);
+  box-shadow: 0 0 30px rgba(255, 0, 127, 0.5);
+  transition: transform 0.3s ease;
+}
+
+.profile-logo:hover {
+  transform: scale(1.05) rotate(3deg);
+}
+
+header .subtitle {
+  font-size: 1.2rem;
+  color: var(--accent);
+  letter-spacing: 3px;
+  margin-top: 10px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+header .intro-blurb {
+  max-width: 600px;
+  margin: 20px auto;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+  margin-top: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 500;
+  padding: 10px 20px;
+  border-radius: 30px;
+  transition: 0.3s;
+  border: 1px solid transparent;
+}
+
+nav a:hover {
+  border-color: var(--primary);
+  background: rgba(142, 45, 226, 0.1);
+  box-shadow: 0 0 15px rgba(142, 45, 226, 0.4);
+}
+
+/* --- 4. Timeline Structure --- */
+main {
+  padding: 80px 20px;
+  position: relative;
+}
+
+.timeline {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--primary), var(--accent), var(--secondary));
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  margin-left: -1px;
+  box-shadow: 0 0 15px var(--primary);
+}
+
+.timeline-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 100px; /* More spacing for longer text */
+  position: relative;
+  opacity: 0; 
+  transition: all 1s ease;
+}
+
+/* Card Orientations */
+.timeline-card.left { flex-direction: row; transform: translateX(-50px); }
+.timeline-card.left .card-content { margin-right: 50px; text-align: right; }
+.timeline-card.left .card-image-container { margin-left: 50px; }
+
+.timeline-card.right { flex-direction: row-reverse; transform: translateX(50px); }
+.timeline-card.right .card-content { margin-left: 50px; text-align: left; }
+.timeline-card.right .card-image-container { margin-right: 50px; }
+
+.timeline-card.show { opacity: 1; transform: translateX(0); }
+
+.timeline-card::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: var(--bg-color);
+  border: 4px solid var(--accent);
+  border-radius: 50%;
+  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 15px var(--accent);
+}
+
+/* --- 5. Card Components --- */
+.card-content {
+  width: 45%;
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 40px;
+  border-radius: 20px;
+  border: var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  position: relative;
+}
+
+.card-content span {
+  font-size: 4rem;
+  font-weight: 800;
+  position: absolute;
+  top: -30px;
+  opacity: 0.1;
+  color: var(--text-main);
+}
+.timeline-card.left .card-content span { right: 20px; }
+.timeline-card.right .card-content span { left: 20px; }
+
+.card-content h2 {
+  color: var(--primary);
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+}
+
+.card-content p {
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 20px; /* Space between paragraphs */
+  font-size: 0.95rem;
+}
+
+.card-content strong {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+/* --- IMAGE SIZING FIX --- */
+.card-image-container {
+  width: 45%;
+  height: 350px; /* FIXED HEIGHT FOR ALL IMAGES */
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.05);
+}
+
+.card-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This cuts the image to fit the box perfectly */
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.card-image-container:hover img {
+  transform: scale(1.05);
+}
+
+.caption {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+/* --- 6. NEW GALLERY SECTION --- */
+.gallery-section {
+  max-width: 1200px;
+  margin: 100px auto 50px auto;
+  text-align: center;
+}
+
+.gallery-title {
+  font-size: 2.5rem;
+  margin-bottom: 40px;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  padding: 0 20px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 250px; /* Fixed height for gallery squares */
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+  filter: grayscale(40%); /* Slightly faded initially */
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.gallery-grid img:hover {
+  transform: scale(1.03);
+  filter: grayscale(0%); /* Full color on hover */
+  border-color: var(--accent);
+  box-shadow: 0 0 20px rgba(255, 0, 127, 0.4);
+  z-index: 2;
+}
+
+/* --- 7. Footer --- */
+footer {
+  background: #000;
+  padding: 50px 20px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+footer h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: var(--text-main);
+}
+
+footer .copyright {
+  margin-top: 30px;
+  font-size: 0.8rem;
+  color: #555;
+}
+
+/* --- 8. Mobile Responsive --- */
+@media screen and (max-width: 900px) {
+  .timeline::after { left: 20px; }
+  
+  .timeline-card {
+    flex-direction: column !important;
+    align-items: flex-start;
+  }
+  
+  .timeline-card::after {
+    left: 20px;
+    transform: none;
+  }
+  
+  .card-content {
+    width: 100%;
+    margin: 0 0 20px 0 !important;
+    text-align: left !important;
+    padding-left: 60px; /* Space for line */
+    padding-right: 20px;
+  }
+  
+  .card-content span {
+    right: 20px !important;
+    left: auto !important;
+  }
+  
+  .card-image-container {
+    width: calc(100% - 50px);
+    margin: 0 0 0 50px !important;
+    height: 250px; /* Smaller height for mobile */
+  }
+
+  .timeline-card.left, .timeline-card.right {
+    transform: none;
+  }
+}
